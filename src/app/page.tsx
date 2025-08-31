@@ -600,7 +600,7 @@ export default function Home() {
          
            
             <div className="d-flex">
-              <button className="btn btn-outline-light me-2">Login</button>
+              <button className="btn btn-outline-light me-2"><a href="./login">Login</a></button>
               <button className="btn btn-primary">Sign Up</button>
             </div>
           </div>
