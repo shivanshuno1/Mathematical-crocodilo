@@ -740,7 +740,7 @@ export default function Home() {
             <a href="#"><i className="fab fa-github"></i></a>
             <a href="#"><i className="fab fa-discord"></i></a>
           </div>
-          <p className="mt-4">© 2023 AI Robotics Platform. All rights reserved.</p>
+          <p className="mt-4">© 2025 AI Robotics Platform. All rights reserved.</p>
         </div>
       </footer>
     </>
