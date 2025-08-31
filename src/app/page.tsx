@@ -596,7 +596,7 @@ export default function Home() {
                <a className="nav-link" href="#">Pricing</a>
  
             
-                <a className="nav-link" href="./contact-us">Contact</a>
+                 <a className="nav-link" href="./contact-us">Contact</a>
          
            
             <div className="d-flex">
