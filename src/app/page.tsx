@@ -586,7 +586,7 @@ export default function Home() {
             <span className="navbar-toggler-icon"></span>
           </button>
           
-                <a className="nav-link" href="#">About</a>
+                <a className="nav-link" href="./about-us">About</a>
             
        
                 <a className="nav-link" href="#">Features</a>
