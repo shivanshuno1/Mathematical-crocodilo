@@ -4,15 +4,38 @@ import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation"; // ✅ useRouter, not redirect
+import Link from "next/link";
+import ReCAPTCHA from "react-google-recaptcha";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
+  const router = useRouter();
   const headingRef = useRef(null);
   const subRef = useRef(null);
   const heroImageRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+ const [captchaError, setCaptchaError] = useState<string | null>(null);
+
+
+  // ✅ Redirect logic for client components
+  
+
+   const handleCaptchaChange = (value) => {
+    console.log("Captcha value:", value);
+    if (value) {
+      setCaptchaError(""); // captcha solved
+    } else {
+      setCaptchaError("Please verify the captcha");
+    }
+  };
+
+   const handleCaptchaError = () => {
+    setCaptchaError("Captcha error. Please try again.");
+  };
+
 
   const sliderContent = [
     {
@@ -96,6 +119,7 @@ export default function Home() {
       { opacity: 1, x: 0, duration: 1, ease: "power2.out" }
     );
   }, [currentSlide]);
+  
 
   return (
     <>
@@ -573,39 +597,31 @@ export default function Home() {
       `}</style>
 
       {/* Navigation Bar - FIXED: Solid background */}
-      <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div className="container">
-          <a className="navbar-brand" href="#">
-            <span className="text-blue-500">AI</span> Robotics
-          </a>
-          <button 
-            className="navbar-toggler" 
-            type="button" 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          
-                <a className="nav-link" href="./about-us">About</a>
-            
-       
-                <a className="nav-link" href="#">Features</a>
-          
-              
-                <a className="nav-link" href=" http://localhost:5173/">Tools</a>
-               <a className="nav-link" href="#">Pricing</a>
- 
-            
-                 <a className="nav-link" href="./contact-us">Contact</a>
-         
-           
-            <div className="d-flex">
-              <button className="btn btn-outline-light me-2"><a href="./login">Login</a></button>
-              <button className="btn btn-primary">Sign Up</button>
-            </div>
-          </div>
-        
-      </nav>
+     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div className="container">
+    <Link href="/" className="navbar-brand">
+      <span className="text-blue-500">AI</span> Robotics
+    </Link>
+    <button 
+      className="navbar-toggler" 
+      type="button" 
+      onClick={() => setIsMenuOpen(!isMenuOpen)}
+    >
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    
+    <Link href="/about-us" className="nav-link">About</Link>
+    <Link href="/features" className="nav-link">Features</Link>
+    <Link href="http://localhost:5173/" className="nav-link">Tools</Link>
+    <Link href="/pricing" className="nav-link">Pricing</Link>
+    <Link href="/contact-us" className="nav-link">Contact</Link>
+
+    <div className="d-flex">
+      <Link href="/login" className="btn btn-outline-light me-2  hidden">Login</Link>
+      <Link href="/register" className="btn btn-primary">Sign Up</Link>
+    </div>
+  </div>
+</nav>
 
       {/* Hero Section */}
       <div className="hero">
