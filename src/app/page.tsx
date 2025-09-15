@@ -7,10 +7,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { redirect, useRouter } from "next/navigation"; // ✅ useRouter, not redirect
 import Link from "next/link";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useSession, signOut, SessionProvider } from "next-auth/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
+
+    const { data: session } = useSession();  // ✅ this works now
+  
   const router = useRouter();
   const headingRef = useRef(null);
   const subRef = useRef(null);
@@ -21,7 +25,7 @@ export default function Home() {
 
 
   // ✅ Redirect logic for client components
-  
+   
 
    const handleCaptchaChange = (value) => {
     console.log("Captcha value:", value);
@@ -617,9 +621,20 @@ export default function Home() {
     <Link href="/contact-us" className="nav-link">Contact</Link>
 
     <div className="d-flex">
-      <Link href="/login" className="btn btn-outline-light me-2  hidden">Login</Link>
+  {session ? (
+    <button
+      onClick={() => signOut({ callbackUrl: "/login" })}
+      className="btn btn-outline-light me-2"
+    >
+      Logout
+    </button>
+  ) : (
+    <>
+      <Link href="/login" className="btn btn-outline-light me-2">Login</Link>
       <Link href="/register" className="btn btn-primary">Sign Up</Link>
-    </div>
+    </>
+  )}
+</div>
   </div>
 </nav>
 
