@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRouter } from "next/navigation"; // ✅ useRouter, not redirect
+import { redirect, useRouter } from "next/navigation"; // ✅ useRouter, not redirect
 import Link from "next/link";
 import ReCAPTCHA from "react-google-recaptcha";
 

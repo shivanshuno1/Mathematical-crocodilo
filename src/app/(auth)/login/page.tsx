@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import ReCAPTCHA from "react-google-recaptcha";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 export default function FuturisticLogin() {
@@ -19,9 +19,11 @@ export default function FuturisticLogin() {
   const router = useRouter();
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
+
+
   const handleCaptchaChange = (token: string | null) => {
     setCaptchaToken(token);
-    if (token) setCaptchaError(null);
+    if (!token) setCaptchaError(null);
   };
 
   const handleCaptchaError = () => {
@@ -30,47 +32,41 @@ export default function FuturisticLogin() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!captchaToken) {
-      setCaptchaError("⚠️ Please verify you are human");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-
-     if (result?.error) {
-  alert('❌ Login failed: ' + result.error);
-  recaptchaRef.current?.reset();
-  setCaptchaToken(null);
-  setCaptchaError(null);
-} else {
-  // Check if we're in a redirect loop by checking the previous page
-  const previousPage = document.referrer;
-  if (previousPage.includes('/login')) {
-    // Force a hard redirect to break the loop
-    window.location.href = '/';
-  } else {
-    // Use the router for normal navigation
-    router.push('/');
-    router.refresh();
+  e.preventDefault();
+  if (!captchaToken) {
+    setCaptchaError("⚠️ Please verify you are human");
+    return;
   }
-}
-    } catch (error) {
-      alert('❌ Network error. Please try again.');
+
+  setLoading(true);
+
+  try {
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      alert("❌ Login failed: " + result.error);
       recaptchaRef.current?.reset();
       setCaptchaToken(null);
       setCaptchaError(null);
-    } finally {
-      setLoading(false);
+    } else {
+      // ✅ Safe redirect to home page
+      router.push("/");
+      router.refresh();
     }
-  };
+  } catch (error) {
+    alert("❌ Network error. Please try again.");
+    recaptchaRef.current?.reset();
+    setCaptchaToken(null);
+    setCaptchaError(null);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-black">
