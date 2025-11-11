@@ -8,26 +8,30 @@ import { redirect, useRouter } from "next/navigation"; // ✅ useRouter, not red
 import Link from "next/link";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useSession, signOut, SessionProvider } from "next-auth/react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
 
-    const { data: session } = useSession();  // ✅ this works now
-  
+  const { data: session } = useSession();  // ✅ this works now
+
   const router = useRouter();
   const headingRef = useRef(null);
   const subRef = useRef(null);
   const heroImageRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
- const [captchaError, setCaptchaError] = useState<string | null>(null);
+ 
+  const [captchaError, setCaptchaError] = useState<string | null>(null);
+   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
 
 
   // ✅ Redirect logic for client components
-   
 
-   const handleCaptchaChange = (value) => {
+
+  const handleCaptchaChange = (value) => {
     console.log("Captcha value:", value);
     if (value) {
       setCaptchaError(""); // captcha solved
@@ -36,7 +40,7 @@ export default function Home() {
     }
   };
 
-   const handleCaptchaError = () => {
+  const handleCaptchaError = () => {
     setCaptchaError("Captcha error. Please try again.");
   };
 
@@ -123,7 +127,7 @@ export default function Home() {
       { opacity: 1, x: 0, duration: 1, ease: "power2.out" }
     );
   }, [currentSlide]);
-  
+
 
   return (
     <>
@@ -601,50 +605,77 @@ export default function Home() {
       `}</style>
 
       {/* Navigation Bar - FIXED: Solid background */}
-     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
-  <div className="container">
-    <Link href="/" className="navbar-brand">
-      <span className="text-blue-500">AI</span> Robotics
-    </Link>
-    <button 
-      className="navbar-toggler" 
-      type="button" 
-      onClick={() => setIsMenuOpen(!isMenuOpen)}
-    >
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    
-    <Link href="/about-us" className="nav-link">About</Link>
-    <Link href="/features" className="nav-link">Features</Link>
-    <Link href="http://localhost:5173/" className="nav-link">Tools</Link>
-    <Link href="/pricing" className="nav-link">Pricing</Link>
-    <Link href="/contact-us" className="nav-link">Contact</Link>
+      <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div className="container">
+          <Link href="/" className="navbar-brand">
+            <span className="text-blue-500">AI</span> Powered Productivity
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
 
-    <div className="d-flex">
-  {session ? (
-    <button
-      onClick={() => signOut({ callbackUrl: "/login" })}
-      className="btn btn-outline-light me-2"
-    >
-      Logout
-    </button>
-  ) : (
-    <>
-      <Link href="/login" className="btn btn-outline-light me-2">Login</Link>
-      <Link href="/register" className="btn btn-primary">Sign Up</Link>
-    </>
-  )}
-</div>
-  </div>
-</nav>
+          <Link href="/about-us" className="nav-link">About</Link>
+          <Link href="/features" className="nav-link">Features</Link>
+         <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="toolsDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Tools
+              </a>
+              <ul className="dropdown-menu bg-amber-300" aria-labelledby="toolsDropdown">
+                <li><Link href="/tools/research-tools" className="dropdown-item">Productivity Tools</Link></li>
+                <li><Link href="/tools/Helping_section/Help-cse" className="dropdown-item">Help Tools</Link></li>
+                <li><Link href="/tools/Helping_section/Help-mba" className="dropdown-item"> MBA Help Tools</Link></li>
+                <li><Link href="/tools/Helping_section/Help-gate" className="dropdown-item"> Gate Help Tools</Link></li>
+                <li><Link href="/tools/Helping_section/Help-mbbs" className="dropdown-item"> Mbbs Help Tools</Link></li>
+                <li><Link href="/tools/Helping_section/Help-pyschology" className="dropdown-item">Pyschology Help Tools</Link></li>
+              </ul>
+            </li>
+
+          <Link href="/pricing" className="nav-link">Pricing</Link>
+          <Link href="/contact-us" className="nav-link">Contact</Link>
+
+          <div className="d-flex">
+            {session ? (
+              <button
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="btn btn-outline-light me-2"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link href="/login" className="btn btn-outline-light me-2">Login</Link>
+                <Link href="/register" className="btn btn-primary">Sign Up</Link>
+
+                <button
+                  onClick={() => signOut({ callbackUrl: "/login" })}
+                  className="btn btn-outline-light me-2"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </nav>
 
       {/* Hero Section */}
       <div className="hero">
         <h1 ref={headingRef} className="neon-text">
-          Welcome to the Future of AI & Robotics
+           SynapseLearn
         </h1>
         <p ref={subRef} className="lead">
-          Where Artificial Intelligence Meets Innovation & Automation
+         A platform that leverages AI to enhance productivity and streamline workflows across various domains especially for students.
         </p>
         <img
           ref={heroImageRef}

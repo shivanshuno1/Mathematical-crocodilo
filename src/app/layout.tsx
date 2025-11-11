@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+import Script from "next/script";
 
 
 const geistSans = Geist({
@@ -32,6 +33,7 @@ export default function RootLayout({
       >
         <SessionProvider>
              {children}
+               <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" />
         </SessionProvider>
        
       </body>

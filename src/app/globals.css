@@ -24,3 +24,98 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+/* Dropdown Base Styles */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background-color: #fcd34d; /* amber-300 */
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+  z-index: 40;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: #374151;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(252, 211, 77, 0.5);
+}
+
+.dropdown-item:hover {
+  background-color: #fbbf24; /* amber-400 */
+  color: #1f2937;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+/* Submenu Styles */
+.group:hover .group-hover\:visible {
+  visibility: visible;
+}
+
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1;
+}
+
+/* Submenu positioning */
+.absolute {
+  position: absolute;
+}
+
+.left-0 {
+  left: 0;
+}
+
+.top-full {
+  top: 100%;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+/* Transition effects */
+.transition-all {
+  transition-property: all;
+}
+
+.duration-200 {
+  transition-duration: 200ms;
+}
+
+/* Z-index for proper stacking */
+.z-50 {
+  z-index: 50;
+}
+
+/* Ensure the main dropdown items are properly styled */
+.relative {
+  position: relative;
+}
+
+/* Hide submenu by default */
+.opacity-0 {
+  opacity: 0;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+/* Show submenu on hover */
+.group:hover .opacity-100 {
+  opacity: 1;
+}
+
+.group:hover .visible {
+  visibility: visible;
+}
